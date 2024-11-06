@@ -1,12 +1,15 @@
 // backend.js
 import express from "express";
 import axios from "axios"; 
+import dotenv from "dotenv";
 
 const app = express();
 const port = 8000;
 
+dotenv.config();
 
-const API_KEY = '07a042f2cdf746179eb011e0cafcfb4c'; 
+
+const { API_KEY } = process.env;
 const API = 'https://api.spoonacular.com/recipes/random';
 app.use(express.json());
 
@@ -17,7 +20,7 @@ function mapRecipeToSchema(recipe) {
     name: recipe.title,
     image_url: recipe.image,
     // summary: recipe.summary,
-    ingredients: recipe.extendedIngredients ? recipe.extendedIngredients.map(ing => ing.name) : [],
+    ingredients: recipe.extendedIngredients ? recipe.extendedIngredients.map(ing => ing.name):[],
     // instructions: recipe.instructions || "No instructions available"
   };
 }
