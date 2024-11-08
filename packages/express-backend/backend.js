@@ -2,16 +2,132 @@
 import express from "express";
 import axios from "axios"; 
 import dotenv from "dotenv";
+import fetch from 'node-fetch';
+import mongoose from "mongoose";
+import cors from "cors";
+import recipeService from "./services/recipe_service.js";
 
 const app = express();
 const port = 8000;
 
 dotenv.config();
 
+const { MONGO_CONNECTION_STRING } = process.env;
+
+mongoose.set("debug", true);
+mongoose.connect(MONGO_CONNECTION_STRING).catch((error) => console.log(error));
+
 
 const { API_KEY } = process.env;
 const API = 'https://api.spoonacular.com/recipes/random';
+app.use(cors());
 app.use(express.json());
+
+const meals = {
+  "recipes_list": [
+    {
+      "id": 637675,
+      "name": "Cheesy Potato Corn Scones",
+      "image_url": "https://img.spoonacular.com/recipes/637675-556x370.jpg",
+      "ingredients": [
+        "water",
+        "potato flakes",
+        "butter",
+        "flour",
+        "cornmeal",
+        "cheddar cheese",
+        "baking powder",
+        "salt",
+        "poppy seeds",
+        "milk"
+      ]
+    },
+    {
+      "id": 646185,
+      "name": "Ham and Red Bean Soup",
+      "image_url": "https://img.spoonacular.com/recipes/646185-556x370.jpg",
+      "ingredients": [
+        "leeks",
+        "thyme",
+        "bay leaf",
+        "coriander seeds",
+        "peppercorns",
+        "cumin seeds",
+        "olive oil",
+        "carrots",
+        "celery",
+        "garlic",
+        "tomato paste",
+        "beans",
+        "bone from ham 3 cups ham 1 teaspoon ground chipotle chile powder salt and pepper",
+        "water",
+        "ham",
+        "ground chipotle chile powder",
+        "salt and pepper",
+        "add he ham and chipotle chile powder and stir in. allow to simmer until beans are and are just begin"
+      ]
+    },
+    {
+      "id": 638832,
+      "name": "Chocolate Banoffee Pie",
+      "image_url": "https://img.spoonacular.com/recipes/638832-556x370.jpg",
+      "ingredients": [
+        "bananas",
+        "butter",
+        "chocolate digestives/plain chocolate cookies",
+        "crackers",
+        "thickened cream",
+        "brown sugar",
+        "chocolate",
+        "icing mixture/sugar",
+        "condensed milk",
+        "vanilla essence"
+      ]
+    },
+    {
+      "id": 645680,
+      "name": "Grilled Chuck Burgers with Extra Sharp Cheddar and Lemon Garlic Aioli",
+      "image_url": "https://img.spoonacular.com/recipes/645680-556x370.jpg",
+      "ingredients": [
+        "arugula",
+        "cheddar cheese",
+        "garlic clove",
+        "ground chuck",
+        "lemon juice",
+        "mayonnaise",
+        "olive oil",
+        "parsley",
+        "bell pepper",
+        "onion",
+        "salt",
+        "kaiser rolls",
+        "worcestershire sauce"
+      ]
+    },
+    {
+      "id": 644861,
+      "name": "Gluten Free Yellow Cake And Cupcakes",
+      "image_url": "https://img.spoonacular.com/recipes/644861-556x370.jpg",
+      "ingredients": [
+        "coconut flour",
+        "tapioca flour",
+        "salt",
+        "baking soda",
+        "baking powder",
+        "xanthan gum",
+        "eggs",
+        "sugar",
+        "veganaise",
+        "milk alternative",
+        "vanilla extract",
+        "earth balance butter",
+        "dairy free chocolate chips",
+        "salt",
+        "powdered sugar"
+      ]
+    }
+  ]
+};
 
 
 function mapRecipeToSchema(recipe) {
@@ -26,18 +142,46 @@ function mapRecipeToSchema(recipe) {
 }
 
 
+
+app.get("/", (req, res) => {
+  res.send("Hello, World!");
+});
+
+app.get('/meals', (req, res) => {
+  res.status(200).json(meals);
+});
+
+app.post('/meals', (req, res) => {
+  const newMeal = req.body;
+  
+  if (!newMeal.id || !newMeal.name || !newMeal.image_url || !Array.isArray(newMeal.ingredients)) {
+    return res.status(400).json({ error: 'Invalid meal data' });
+  }
+
+  meals.recipes_list.push(newMeal);
+  res.status(201).json(newMeal);
+});
+
+app.get('/meals/:id', (req, res) => {
+  const mealId = parseInt(req.params.id, 10);
+  const meal = meals.recipes_list.find(m => m.id === mealId);
+
+  if (!meal) {
+    return res.status(404).json({ error: 'Meal not found' });
+  }
+
+  res.status(200).json(meal);
+});
+
+
 async function fetchRandom() {
   try {
-    const response = await axios.get(API, {
-      params: {
-        apiKey: API_KEY,
-        number: 5,  
-      }
-    });
-    if (response.data && response.data.recipes) {
-      return response.data.recipes.map(mapRecipeToSchema);
+    let response = await fetch(`${API}?apiKey=${API_KEY}&number=5`);
+    let data = await response.json();
+    if (data && data.recipes) {
+      return data.recipes.map(mapRecipeToSchema);
     } else {
-      console.error("Error: ", response.data);
+      console.error("Error: ", data);
       return [];  
     }
   } catch (error) {
@@ -49,7 +193,7 @@ async function fetchRandom() {
 app.get('/recipes', async (req, res) => {
   try {
       let recipes = await fetchRandom();  
-      recipes = {recipes_list: recipes }
+      recipes = {recipes_list: recipes}
       res.status(200).send(recipes);
   } catch (error) {
       console.error(error);
