@@ -203,32 +203,32 @@ app.delete('/meals/:id', (req, res) => {
 });
 
 
-// async function fetchRandom() {
-//   try {
-//     let response = await fetch(`${API}?apiKey=${API_KEY}&number=5`);
-//     let data = await response.json();
-//     if (data && data.recipes) {
-//       return data.recipes.map(mapRecipeToSchema);
-//     } else {
-//       console.error("Error: ", data);
-//       return [];  
-//     }
-//   } catch (error) {
-//     console.error('Failed to fetch meals', error);
-//     return [];  
-//   }
-// }
+async function fetchRandom() {
+  try {
+    let response = await fetch(`${API}?apiKey=${API_KEY}&number=5`);
+    let data = await response.json();
+    if (data && data.recipes) {
+      return data.recipes.map(mapRecipeToSchema);
+    } else {
+      console.error("Error: ", data);
+      return [];  
+    }
+  } catch (error) {
+    console.error('Failed to fetch meals', error);
+    return [];  
+  }
+}
 
-// app.get('/recipes', async (req, res) => {
-//   try {
-//       let recipes = await fetchRandom();  
-//       recipes = {recipes_list: recipes}
-//       res.status(200).send(recipes);
-//   } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ error: 'Failed to fetch' });
-//   }
-// });
+app.get('/recipes', async (req, res) => {
+  try {
+      let recipes = await fetchRandom();  
+      recipes = {recipes_list: recipes}
+      res.status(200).send(recipes);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to fetch' });
+  }
+});
 
 
 app.listen(port, () => {
