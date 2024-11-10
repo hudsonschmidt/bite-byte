@@ -1,24 +1,21 @@
+// models/user.js
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema(
-  {
-    name: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-        bucket: {
-        type: [mongoose.Schema.Types.ObjectId], 
-        ref: "Recipe",
-    },
+const UserSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
   },
-  { collection: "users_list" }
-);
+  password: {
+    type: String,
+    required: true,
+  },
+  bucket: {
+    type: [mongoose.Schema.Types.ObjectId], // Array of recipe IDs
+    ref: "Recipe",
+  },
+});
 
 const User = mongoose.model("User", UserSchema);
-
 export default User;
