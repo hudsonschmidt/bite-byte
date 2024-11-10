@@ -33,6 +33,10 @@ function findRecipeToDelete(id) {
 }
 
 
+function getUserRecipes(userId) {
+  return recipeModel.find({ user: userId });
+}
+
 
 
 
@@ -43,4 +47,5 @@ export default {
     findReciepeByName,
     findReciepesByIngridients,
     findRecipeToDelete,
+    getUserRecipes,
 };
