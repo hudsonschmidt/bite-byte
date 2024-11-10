@@ -18,8 +18,8 @@ mongoose.set("debug", true);
 mongoose.connect(MONGO_CONNECTION_STRING).catch((error) => console.log(error));
 
 
-// const { API_KEY } = process.env;
-// const API = 'https://api.spoonacular.com/recipes/random';
+const { API_KEY } = process.env;
+const API = 'https://api.spoonacular.com/recipes/random';
 app.use(cors());
 app.use(express.json());
 
