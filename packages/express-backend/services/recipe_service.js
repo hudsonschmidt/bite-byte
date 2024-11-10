@@ -3,7 +3,7 @@ import recipeModel from "../models/recipe.js";
 
 
 
-function getRecipes(name, job) {
+function getRecipes(name) {
     if (name) {
         return recipeModel.find({ name: new RegExp(name, "i")}); 
       }
@@ -15,8 +15,8 @@ function findRecipeById(id) {
 }
 
 function addRecipe(recipe) {
-  const userToAdd = new recipeModel(user);
-  const promise = userToAdd.save();
+  const recipeToAdd = new recipeModel(recipe);
+  const promise = recipeToAdd.save();
   return promise;
 }
 

@@ -18,8 +18,8 @@ mongoose.set("debug", true);
 mongoose.connect(MONGO_CONNECTION_STRING).catch((error) => console.log(error));
 
 
-const { API_KEY } = process.env;
-const API = 'https://api.spoonacular.com/recipes/random';
+// const { API_KEY } = process.env;
+// const API = 'https://api.spoonacular.com/recipes/random';
 app.use(cors());
 app.use(express.json());
 
@@ -148,58 +148,87 @@ app.get("/", (req, res) => {
 });
 
 app.get('/meals', (req, res) => {
-  res.status(200).json(meals);
+  const name = req.query.name;
+
+  recipeService.getRecipes(name)
+    .then(recipes => res.status(200).json({ recipes_list: recipes }))
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to fetch meals' });
+    });
 });
 
 app.post('/meals', (req, res) => {
   const newMeal = req.body;
-  
-  if (!newMeal.id || !newMeal.name || !newMeal.image_url || !Array.isArray(newMeal.ingredients)) {
-    return res.status(400).json({ error: 'Invalid meal data' });
-  }
 
-  meals.recipes_list.push(newMeal);
-  res.status(201).json(newMeal);
+  recipeService.addRecipe(newMeal)
+    .then(addedRecipe => res.status(201).json(addedRecipe))
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to add meal' });
+    });
 });
 
 app.get('/meals/:id', (req, res) => {
-  const mealId = parseInt(req.params.id, 10);
-  const meal = meals.recipes_list.find(m => m.id === mealId);
+  const mealId = req.params.id;
 
-  if (!meal) {
-    return res.status(404).json({ error: 'Meal not found' });
-  }
-
-  res.status(200).json(meal);
-});
-
-
-async function fetchRandom() {
-  try {
-    let response = await fetch(`${API}?apiKey=${API_KEY}&number=5`);
-    let data = await response.json();
-    if (data && data.recipes) {
-      return data.recipes.map(mapRecipeToSchema);
-    } else {
-      console.error("Error: ", data);
-      return [];  
-    }
-  } catch (error) {
-    console.error('Failed to fetch meals', error);
-    return [];  
-  }
-}
-
-app.get('/recipes', async (req, res) => {
-  try {
-      let recipes = await fetchRandom();  
-      recipes = {recipes_list: recipes}
-      res.status(200).send(recipes);
-  } catch (error) {
+  recipeService.findRecipeById(mealId)
+    .then(meal => {
+      if (!meal) {
+        return res.status(404).json({ error: 'Meal not found' });
+      }
+      res.status(200).json(meal);
+    })
+    .catch(error => {
       console.error(error);
-      res.status(500).json({ error: 'Failed to fetch' });
-  }
+      res.status(500).json({ error: 'Failed to fetch meal' });
+    });
 });
+
+
+app.delete('/meals/:id', (req, res) => {
+  const mealId = req.params.id;
+
+  recipeService.findRecipeToDelete(mealId)
+    .then(deletedMeal => {
+      if (!deletedMeal) {
+        return res.status(404).json({ error: 'Meal not found' });
+      }
+      res.status(200).json({ message: 'Meal deleted successfully', meal: deletedMeal });
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to delete meal' });
+    });
+});
+
+
+// async function fetchRandom() {
+//   try {
+//     let response = await fetch(`${API}?apiKey=${API_KEY}&number=5`);
+//     let data = await response.json();
+//     if (data && data.recipes) {
+//       return data.recipes.map(mapRecipeToSchema);
+//     } else {
+//       console.error("Error: ", data);
+//       return [];  
+//     }
+//   } catch (error) {
+//     console.error('Failed to fetch meals', error);
+//     return [];  
+//   }
+// }
+
+// app.get('/recipes', async (req, res) => {
+//   try {
+//       let recipes = await fetchRandom();  
+//       recipes = {recipes_list: recipes}
+//       res.status(200).send(recipes);
+//   } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ error: 'Failed to fetch' });
+//   }
+// });
 
 
 app.listen(port, () => {
