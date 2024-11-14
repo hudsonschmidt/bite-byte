@@ -1,12 +1,10 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Nav from "./Nav"
-import Body from "./body"
-import About from "./home_about"
-import Browse from "./home_browse"
-import Saved from "./Saved"
-import MyRecipes from "./home_mr"
+import Home from "./Home.jsx"
 import BrowsePage from "./Browse.jsx"
+import SavedPage from "./Saved.jsx"
+import MRPage from "./MyRecipes.jsx"
 
 
 function MyApp() {
@@ -14,17 +12,12 @@ function MyApp() {
     <div id = "body" className="container-fluid">
       <Nav />
       <Routes>
-        <Route path="/" element={<body />} />
+        <Route path="/" element={<Home />} />
         <Route path="/browse" element={<BrowsePage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/my-recipes" element={<MyRecipes />} />
-        <Route path="/saved" element={<Saved />} />
+        <Route path="/saved" element={<SavedPage />} />
+        <Route path="/myrecipes" element={<MRPage />} />
       </Routes>
-      <Body />
-      <About />
-      <Browse />
-      <Saved />
-      <MyRecipes />
+      
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-function Body() {
+function HomeBody() {
   return (
     <div class="jumbotron jumbotron-fluid mt-5">
         <div id="header" class="container">
@@ -11,4 +11,4 @@ function Body() {
   );
 }
 
-export default Body;
+export default HomeBody;

@@ -1,6 +1,6 @@
 import React from "react";
 
-function Browse() {
+function HomeBrowse() {
   return (
     <div class="row">
         <div id="browse" class="col-sm-6"></div>
@@ -13,4 +13,4 @@ function Browse() {
   );
 }
 
-export default Browse;
+export default HomeBrowse;
