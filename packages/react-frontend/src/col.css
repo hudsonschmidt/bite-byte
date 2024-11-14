@@ -1,0 +1,49 @@
+#column-0 {
+    background-color: #333333;
+    padding: 70px; 
+    text-align: center; 
+    height: 300px;
+    line-height: 100px;
+    color: #F5F5F5;
+}
+
+#column-2 {
+    background-color:#f9f9f9;
+    padding: 150px;
+    text-align: center;
+    height: 500px;
+}
+
+#browse {
+    background-image: url('./images/browse.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 500p
+}
+
+#saved {
+    background-image: url('./images/saved.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 500p
+}
+
+#myrecipes {
+    background-image: url('./images/myrecipes.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 500p
+}
+
+.btn {
+    color: #F5F5F5;
+    background-color: rgba(0, 0, 0, 0.2);
+
+}
+
+.btn:hover {
+    color: #2f484f;
+}

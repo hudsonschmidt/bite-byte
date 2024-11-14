@@ -1,46 +1,53 @@
-body {
+#body {
   font-family:'Helvetica';
-font-style:normal;
-font-weight:100;
+  font-style:normal;
+  font-weight:100;
   background-color: #F5F5F5;
   overflow-x: hidden;
+  padding: 0;
 }
 
-/* Navbar */
-.navbar-inverse {
+.jumbotron {
+  background-image: url('./images/index_background.jpg');
+  padding: 40vh 2rem;
+  margin-top: 60px; /* To ensure spacing from fixed navbar */
+  color: #333333;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;
+}
+
+.jumbotron h1 {
+  font-size: 4em; 
+  font-weight: bold;
+  text-align: right;
+}
+
+.jumbotron p {
+  font-size: 1.8em;
+  text-align: right;
+}
+/* 
+#header{
   background-color: #2f484f;
-  border-color: #2f484f;
-  border-radius: 0;
-  margin-bottom: 0;
-  height: 40px;
-  min-height: 40px;
-  line-height: 40px;
-}
-/* Navbar name */
-.navbar-header .navbar-brand {
-  color: #F5F5F5;
-  line-height: 40px; 
-  height: 40px; 
-  padding-top: 0;
-  padding-bottom: 0;
-  float: left; 
-}
+} */
 
-/* navbar items */
-.navbar-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-}
-.navbar-inverse .nav > li > a {
-  color: #F5F5F5;
-  line-height: 40px;
-  height: 40px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.navbar-inverse .nav > li > a:hover {
-  color: #F5F5F5;
-}
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .navbar-brand {
+      font-size: 1.2rem;
+  }
+
+  .nav-link {
+      font-size: 0.9rem;
+      margin: 0 5px;
+  }
+
+  .jumbotron h1 {
+      font-size: 2.5rem;
+  }
+
+  .jumbotron p {
+      font-size: 1rem;
+  }
+} 

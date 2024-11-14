@@ -1,8 +1,10 @@
 // src/main.jsx
 import React from "react";
 import ReactDOMClient from "react-dom/client";
-import MyApp from "./MyApp";
+import MyApp from "./MyApp.jsx";
+import "./nav.css";
 import "./main.css";
+import "./col.css";
 
 const container = document.getElementById("root");
 
