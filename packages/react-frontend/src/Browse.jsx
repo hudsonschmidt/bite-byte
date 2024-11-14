@@ -1,14 +1,10 @@
-import React from "react";
+import React from 'react';
 
 function Browse() {
   return (
-    <div class="row">
-        <div id="browse" class="col-sm-6"></div>
-        <div id="column-2" class="col-sm-6">
-            <h3>Browse</h3>
-            <p>Find recipes here!</p>
-            <a href="#" class="btn">See More...</a>
-        </div>
+    <div className="browse-page">
+      <h1>Browse Recipes</h1>
+      <p>Welcome to the Browse page! Here you can find a wide variety of recipes.</p>
     </div>
   );
 }
