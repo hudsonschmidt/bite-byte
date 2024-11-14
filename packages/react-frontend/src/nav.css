@@ -1,0 +1,22 @@
+/* Navbar */
+.navbar {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#profile {
+  border-radius: 100px;
+}
+
+.nav-link {
+  margin: 0 10px;
+  transition: color 0.3s;
+  border-radius: 5px;
+}
+
+.nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.d-flex .nav-link img:hover {
+  border-color: #333333;
+}
