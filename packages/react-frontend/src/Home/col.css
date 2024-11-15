@@ -15,7 +15,7 @@
 }
 
 #browse {
-    background-image: url('./images/browse.jpeg');
+    background-image: url('../images/browse.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -23,7 +23,7 @@
 }
 
 #saved {
-    background-image: url('./images/saved.jpeg');
+    background-image: url('../images/saved.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -31,7 +31,7 @@
 }
 
 #myrecipes {
-    background-image: url('./images/myrecipes.jpeg');
+    background-image: url('../images/myrecipes.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

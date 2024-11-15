@@ -1,0 +1,32 @@
+#savedbody {
+    margin-top: 60px;
+  }
+
+#sidebar {
+    margin-top: 20vh;
+    
+}
+
+.card-title{
+    text-align: center;
+}
+
+  /* Mobile responsiveness */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+  
+    .nav-link {
+        font-size: 0.9rem;
+        margin: 0 5px;
+    }
+  
+    .jumbotron h1 {
+        font-size: 2.5rem;
+    }
+  
+    .jumbotron p {
+        font-size: 1rem;
+    }
+  } 

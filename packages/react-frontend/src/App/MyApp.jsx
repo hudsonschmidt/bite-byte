@@ -1,15 +1,16 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Nav from "./Nav"
-import Home from "./Home.jsx"
-import BrowsePage from "./Browse.jsx"
-import SavedPage from "./Saved.jsx"
-import MRPage from "./MyRecipes.jsx"
+import Home from "../Home/Home.jsx"
+import BrowsePage from "../Browse/Browse.jsx"
+import SavedPage from "../Saved/Saved.jsx"
+import MRPage from "../MyRecipes/MyRecipes.jsx"
+import "./app.css"
 
 
 function MyApp() {
   return (
-    <div id = "body" className="container-fluid">
+    <div id = "app" className="container-fluid">
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
