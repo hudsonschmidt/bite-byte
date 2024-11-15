@@ -5,6 +5,7 @@ import Home from "../Home/Home.jsx"
 import BrowsePage from "../Browse/Browse.jsx"
 import SavedPage from "../Saved/Saved.jsx"
 import MRPage from "../MyRecipes/MyRecipes.jsx"
+import LoginPage from "../Login/Login.jsx"
 import "./app.css"
 
 

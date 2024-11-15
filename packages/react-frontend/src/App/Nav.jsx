@@ -24,10 +24,11 @@ function Nav() {
                     <li class="nav-item">
                         <Link className="nav-link" to="/myrecipes">My Recipes</Link>
                     </li>
+
                 </ul>
             </div>
             <div class="d-flex">
-                <a id="profile" class="nav-link" href="#">
+                <a id="profile" class="nav-link" href="/login">
                     <img src="./images/user_icon.png" alt="User Profile" width="30" height="30" class="rounded-circle"/>
                 </a>
             </div>
