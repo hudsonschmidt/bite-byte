@@ -1,6 +1,6 @@
 import React from "react";
 
-function About() {
+function HomeAbout() {
   return (
     <div class="row">
         <div id="column-0" class="col-sm-12">
@@ -11,4 +11,4 @@ function About() {
   );
 }
 
-export default About;
+export default HomeAbout;
