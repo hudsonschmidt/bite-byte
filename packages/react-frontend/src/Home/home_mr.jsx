@@ -7,7 +7,7 @@ function HomeMR() {
             <div id="column-2" class="col-sm-6">
                 <h3>My Recipes</h3>
                 <p>See your recipes here!</p>
-                <a href="#" class="btn">See More...</a>
+                <a href="myrecipes" class="btn" id="button">See More...</a>
             </div>
         </div>
       );

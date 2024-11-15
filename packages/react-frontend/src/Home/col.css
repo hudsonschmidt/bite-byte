@@ -38,12 +38,12 @@
     height: 500p
 }
 
-.btn {
-    color: #F5F5F5;
-    background-color: rgba(0, 0, 0, 0.2);
+#button {
+    color: black;
+    background-color: rgba(0, 0, 0, 0.15);
 
 }
 
-.btn:hover {
-    color: #2f484f;
+#button:hover {
+    background-color: rgba(0, 0, 0, 0.3);
 }

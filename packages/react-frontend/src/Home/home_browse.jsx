@@ -7,7 +7,7 @@ function HomeBrowse() {
         <div id="column-2" class="col-sm-6">
             <h3>Browse</h3>
             <p>Find recipes here!</p>
-            <a href="#" class="btn">See More...</a>
+            <a href="browse" class="btn" id="button">See More...</a>
         </div>
     </div>
   );
