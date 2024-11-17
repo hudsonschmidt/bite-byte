@@ -3,11 +3,12 @@ import recipeModel from "../models/recipe.js";
 
 
 
-function getRecipes(name) {
-    if (name) {
-        return recipeModel.find({ name: new RegExp(name, "i")}); 
-      }
-      return recipeModel.find(); 
+function getRecipes(name, limit, offset) {
+  if (name) 
+  {
+    return recipeModel.find({ name: new RegExp(name, "i")}); 
+  }
+  return recipeModel.find().skip(offset).limit(); 
 }
 
 function findRecipeById(id) {
