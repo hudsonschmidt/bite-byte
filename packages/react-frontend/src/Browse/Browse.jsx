@@ -21,6 +21,9 @@ const Browse = () => {
     }
   };
 
+  const addMeal = async () => {}
+  const deleteMeal = async () => {}
+
   useEffect(() => {
     // loadRecipes();
     fetchMeals();
