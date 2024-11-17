@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
 });
 
 app.get('/meals', (req, res) => {
-  const name = req.query.name;
+  const name = req.query.name || '';
   const limit = parseInt(req.query.limit, 10) || 20; 
   const offset = parseInt(req.query.offset, 10) || 0; 
 
