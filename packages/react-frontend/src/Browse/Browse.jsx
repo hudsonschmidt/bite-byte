@@ -17,7 +17,7 @@ const Browse = () => {
         console.error('Failed to fetch meals:', response.statusText);
       }
     } catch (error) {
-      console.error('Error fetching meals:', error);
+      console.error('Failed to fetch meals:', error);
     }
   };
 
@@ -51,6 +51,7 @@ const Browse = () => {
   return (
     <div id="browsebody" className="container-fluid">
       <div className="row">
+        
         {/* Sidebar */}
         {/* <div id="search-bar" className="col-md-3 bg-light p-4">
           <h2 id="sidebar">Browse</h2>
