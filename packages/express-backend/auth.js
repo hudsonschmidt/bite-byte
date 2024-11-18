@@ -64,6 +64,7 @@ export function authenticateUser(req, res, next) {
 
   jwt.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
     if (error) {
+      console.log('Backend Secret:', process.env.TOKEN_SECRET);
       console.error("JWT error:", error);
       return res.status(401).send("Unauthorized: Invalid token");
     }
@@ -73,15 +74,13 @@ export function authenticateUser(req, res, next) {
         if (!user) {
           return res.status(401).send("Unauthorized: User not found");
         }
-        try {
-          const decoded = jwt.verify(token, JWT_SECRET);
-          req.user = decoded;
-          next();
-        } catch (err) {
-          console.error('JWT error:', err.message);
-          return res.status(500).json({ error: 'Internal server error' });
-        }
+        req.user = user;
+        next();
       })
+      .catch((error) => {
+        console.error("JWT error:", error);
+        res.status(500).send("Internal server error");
+      });
   });
 }
 
