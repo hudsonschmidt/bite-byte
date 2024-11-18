@@ -54,7 +54,7 @@ const Browse = () => {
   return (
     <div id="browsebody" className="container-fluid">
       <div className="row">
-        
+        { forms.jsx }
         {/* Sidebar */}
         {/* <div id="search-bar" className="col-md-3 bg-light p-4">
           <h2 id="sidebar">Browse</h2>
