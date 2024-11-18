@@ -7,7 +7,7 @@ function Nav() {
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
             <img src='./images/logo.png' alt="Logo" width="30" height="30" class="d-inline-block align-text-top"/>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 Bite & Byte
             </a>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
