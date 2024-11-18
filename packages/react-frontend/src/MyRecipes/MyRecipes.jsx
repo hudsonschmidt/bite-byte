@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Form from './Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./MyRecipes.css"
 
@@ -30,14 +31,56 @@ const MyRecipes = () => {
     setRecipeIndex(prev => prev + 6);
   };
 
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    if (searchTerm === '') {
-      setFilteredRecipes(recipeData.slice(0, recipeIndex));
-    } else {
-      const filtered = recipeData.filter(recipe => recipe.name.toLowerCase().includes(searchTerm));
-      setFilteredRecipes(filtered);
+//  const addMeal = async (meal) => {
+//    try {
+//      const response = await fetch('http://localhost:8000/meals', {
+//        method: 'POST',
+//        headers: {
+//          'Content-Type': 'application/json',
+//          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzNhOTU1YjQ5MTMyM2ZlNDE1NzRjMmYiLCJpYXQiOjE3MzE4OTI1NzEsImV4cCI6MTczMTk3ODk3MX0.2YJVf-gIpbpqB3VNLvP_qGu-5k4mF7eKnAWeP-FnG3E',
+//        },
+//        body: JSON.stringify(meal),
+//      });
+//
+//      if (response.ok) {
+//        loadRecipes()
+//      } else {
+//        console.error('Failed to add meal:', response.statusText);
+//      }
+//    } catch (error) {
+//      console.error('Failed to add meal:', error);
+//    }
+//  };
+
+  const addMeal = async (meal) => {
+    try {
+      const response = await fetch('http://localhost:8000/meals', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${userToken}',
+        },
+        body: JSON.stringify(meal),
+      });
+
+      if (response.ok) {
+        const addedMeal = await response.json();
+
+        // Add the returned meal to the local recipeData and filteredRecipes states
+        setRecipeData((prevData) => [...prevData, addedMeal]);
+        setFilteredRecipes((prevFiltered) => [...prevFiltered, addedMeal]);
+      } else {
+        console.error('Failed to add meal:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Failed to add meal:', error);
     }
+  };
+
+  // const deleteMeal = async () => {};
+  const deleteRecipe = (id) => {
+    setRecipeData((prevData) => prevData.filter((recipe) => recipe.id !== id));
+    setFilteredRecipes((prevFiltered) => prevFiltered.filter((recipe) => recipe.id !== id));
   };
 
   const handleScroll = (e) => {
@@ -49,9 +92,9 @@ const MyRecipes = () => {
     <div id="mrbody" className="container-fluid">
       <div className="row">
         {/* Sidebar */}
-        <div id="search-bar" className="col-md-3 bg-light p-4">
-          <h2 id="sidebar">My Recipes</h2>
-          <input type="text" id="recipeSearch sidebar" className="form-control" placeholder="Search" onChange={handleSearch} />
+        <div className="col-md-3 bg-light p-4">
+          <h2>Add a Reciepe</h2>
+          <Form handleSubmit={addMeal} />
         </div>
 
         {/* Recipe Cards */}
@@ -63,6 +106,10 @@ const MyRecipes = () => {
                   <img src={recipe.image} className="card-img-top" alt={recipe.name} />
                   <div className="card-body">
                     <h5 className="card-title">{recipe.name}</h5>
+                    {/*} delete button */}
+                    <button onClick={() => deleteRecipe(recipe.id)} className="delete-button">
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>

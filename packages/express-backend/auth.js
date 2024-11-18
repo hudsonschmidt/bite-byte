@@ -1,7 +1,11 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import User from "./models/user.js"; 
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
+dotenv.config();
+
+const { JWT_SECRET } = process.env;
 
 export function registerUser(req, res) {
   const { username, pwd } = req.body; // from form
@@ -33,7 +37,6 @@ export function registerUser(req, res) {
     });
 }
 
-
 function generateAccessToken(userId) {
   return new Promise((resolve, reject) => {
     jwt.sign(
@@ -50,7 +53,6 @@ function generateAccessToken(userId) {
     );
   });
 }
-
 
 export function authenticateUser(req, res, next) {
   const authHeader = req.headers["authorization"];
@@ -71,13 +73,15 @@ export function authenticateUser(req, res, next) {
         if (!user) {
           return res.status(401).send("Unauthorized: User not found");
         }
-        req.user = user;
-        next();
+        try {
+          const decoded = jwt.verify(token, JWT_SECRET);
+          req.user = decoded;
+          next();
+        } catch (err) {
+          console.error('JWT error:', err.message);
+          return res.status(500).json({ error: 'Internal server error' });
+        }
       })
-      .catch((error) => {
-        console.error("JWT error:", error);
-        res.status(500).send("Internal server error");
-      });
   });
 }
 
