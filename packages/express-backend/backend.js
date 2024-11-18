@@ -59,7 +59,7 @@ app.get('/meals', (req, res) => {
 app.post("/meals", authenticateUser, (req, res) => {
   const { name, image_url, ingredients } = req.body;
 
-  const newMeal = { name, image_url, ingredients, rating, user: req.user._id };
+  const newMeal = { name, image_url, ingredients, user: req.user._id };
 
   recipeService.addRecipe(newMeal)
     .then(addedRecipe => res.status(201).json(addedRecipe))

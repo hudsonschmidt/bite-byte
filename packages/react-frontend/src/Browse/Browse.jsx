@@ -20,12 +20,13 @@ const Browse = () => {
     }
   };
 
-  const addMeal = async () => {
+  const addMeal = async (meal) => {
     try {
       const response = await fetch('http://localhost:8000/meals', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzNhOTU1YjQ5MTMyM2ZlNDE1NzRjMmYiLCJpYXQiOjE3MzE4OTI1NzEsImV4cCI6MTczMTk3ODk3MX0.2YJVf-gIpbpqB3VNLvP_qGu-5k4mF7eKnAWeP-FnG3E',
         },
         body: JSON.stringify(meal), 
       });
