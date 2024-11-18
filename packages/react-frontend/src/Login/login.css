@@ -1,0 +1,25 @@
+#loginbody {
+  margin-top: 50px;
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+h1 {
+  color: #007bff;
+  font-size: 2rem;
+}
+
+.alert {
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.btn {
+  font-size: 1.1rem;
+  padding: 12px;
+}
+
+a {
+  color: #007bff;
+}
