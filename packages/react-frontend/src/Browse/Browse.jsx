@@ -40,8 +40,8 @@ const Browse = () => {
     } catch (error) {
       console.error('Failed to add meal:', error);
     }
-  }
-  const deleteMeal = async () => {}
+  };
+  const deleteMeal = async () => {};
 
   useEffect(() => {
     fetchMeals();
