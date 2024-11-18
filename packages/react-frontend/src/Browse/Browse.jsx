@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import Form from './Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./browse.css"
 
 const Browse = () => {
   const [meals, setMeals] = useState([]);
-  // const [filteredRecipes, setFilteredRecipes] = useState([]);
-  // const [recipeIndex, setRecipeIndex] = useState(0);
 
   const fetchMeals = async () => {
     try {
@@ -21,30 +20,31 @@ const Browse = () => {
     }
   };
 
-  const addMeal = async () => {}
+  const addMeal = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/meals', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(meal), 
+      });
+  
+      if (response.ok) {
+        const newMeal = await response.json();
+        setMeals((prevMeals) => [newMeal, ...prevMeals]); 
+      } else {
+        console.error('Failed to add meal:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Failed to add meal:', error);
+    }
+  }
   const deleteMeal = async () => {}
 
   useEffect(() => {
-    // loadRecipes();
     fetchMeals();
-    // eslint-disable-next-line
   }, []);
-
-  // const loadRecipes = () => {
-  //   const newRecipes = recipeData.slice(recipeIndex, recipeIndex + 6);
-  //   setFilteredRecipes(prev => [...prev, ...newRecipes]);
-  //   setRecipeIndex(prev => prev + 6);
-  // };
-
-  // const handleSearch = (e) => {
-  //   const searchTerm = e.target.value.toLowerCase();
-  //   if (searchTerm === '') {
-  //     setFilteredRecipes(recipeData.slice(0, recipeIndex));
-  //   } else {
-  //     const filtered = recipeData.filter(meal => meal.name.toLowerCase().includes(searchTerm));
-  //     setFilteredRecipes(filtered);
-  //   }
-  // };
 
   const handleScroll = (e) => {
     const bottom = Math.ceil(e.target.scrollTop + e.target.clientHeight) >= e.target.scrollHeight;
@@ -54,12 +54,10 @@ const Browse = () => {
   return (
     <div id="browsebody" className="container-fluid">
       <div className="row">
-        { forms.jsx }
-        {/* Sidebar */}
-        {/* <div id="search-bar" className="col-md-3 bg-light p-4">
-          <h2 id="sidebar">Browse</h2>
-          <input type="text" id="recipeSearch sidebar" className="form-control" placeholder="Search" onChange={handleSearch} />
-        </div> */}
+        <div className="col-md-3 bg-light p-4">
+          <h2>Add a Reciepe</h2>
+          <Form handleSubmit={addMeal} />
+        </div>
 
         {/* Recipe Cards */}
         <div id="recipe-container" className="col-md-9" style={{ overflowY: 'auto', height: 'calc(100vh - 56px)', padding: '20px' }} onScroll={handleScroll}>
