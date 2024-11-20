@@ -19,9 +19,6 @@ function Nav() {
                         <Link className="nav-link" to="/browse">Browse</Link>
                     </li>
                     <li class="nav-item">
-                        <Link className="nav-link" to="/saved">Saved</Link>
-                    </li>
-                    <li class="nav-item">
                         <Link className="nav-link" to="/myrecipes">My Recipes</Link>
                     </li>
                 </ul>

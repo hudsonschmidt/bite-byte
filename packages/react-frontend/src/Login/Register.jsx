@@ -47,7 +47,7 @@ function Register() {
 
   return (
     <div className="container container-fluid" id="registerbody">
-      <h1 className="text-center mb-4">Register</h1>
+      <h1 className="text-center mb-4" id='register_h1'>Register</h1>
 
       {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
       {successMessage && <div className="alert alert-success">{successMessage}</div>}
