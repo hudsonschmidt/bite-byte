@@ -4,8 +4,11 @@
   "description": "CSC-307 team project: food/recipe web app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "lint": "npx eslint . && npx prettier --check .",
+	  "test": "npx jest",
+    "dev": "nodemon backend.js",
+    "start": "node backend.js"
   },
   "author": "'",
   "license": "ISC",
