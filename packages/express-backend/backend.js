@@ -43,9 +43,11 @@ app.get("/", (req, res) => {
 });
 
 app.get('/meals', (req, res) => {
-  const name = req.query.name;
+  const name = req.query.name || '';
+  const limit = parseInt(req.query.limit, 10) || 20; 
+  const offset = parseInt(req.query.offset, 10) || 0; 
 
-  recipeService.getRecipes(name)
+  recipeService.getRecipes(name, limit, offset)
     .then(recipes => res.status(200).json({ recipes_list: recipes }))
     .catch(error => {
       console.error(error);
@@ -149,108 +151,108 @@ app.listen(port, () => {
 
 
 
-const meals = {
-  "recipes_list": [
-    {
-      "id": 637675,
-      "name": "Cheesy Potato Corn Scones",
-      "image_url": "https://img.spoonacular.com/recipes/637675-556x370.jpg",
-      "ingredients": [
-        "water",
-        "potato flakes",
-        "butter",
-        "flour",
-        "cornmeal",
-        "cheddar cheese",
-        "baking powder",
-        "salt",
-        "poppy seeds",
-        "milk"
-      ]
-    },
-    {
-      "id": 646185,
-      "name": "Ham and Red Bean Soup",
-      "image_url": "https://img.spoonacular.com/recipes/646185-556x370.jpg",
-      "ingredients": [
-        "leeks",
-        "thyme",
-        "bay leaf",
-        "coriander seeds",
-        "peppercorns",
-        "cumin seeds",
-        "olive oil",
-        "carrots",
-        "celery",
-        "garlic",
-        "tomato paste",
-        "beans",
-        "bone from ham 3 cups ham 1 teaspoon ground chipotle chile powder salt and pepper",
-        "water",
-        "ham",
-        "ground chipotle chile powder",
-        "salt and pepper",
-        "add he ham and chipotle chile powder and stir in. allow to simmer until beans are and are just begin"
-      ]
-    },
-    {
-      "id": 638832,
-      "name": "Chocolate Banoffee Pie",
-      "image_url": "https://img.spoonacular.com/recipes/638832-556x370.jpg",
-      "ingredients": [
-        "bananas",
-        "butter",
-        "chocolate digestives/plain chocolate cookies",
-        "crackers",
-        "thickened cream",
-        "brown sugar",
-        "chocolate",
-        "icing mixture/sugar",
-        "condensed milk",
-        "vanilla essence"
-      ]
-    },
-    {
-      "id": 645680,
-      "name": "Grilled Chuck Burgers with Extra Sharp Cheddar and Lemon Garlic Aioli",
-      "image_url": "https://img.spoonacular.com/recipes/645680-556x370.jpg",
-      "ingredients": [
-        "arugula",
-        "cheddar cheese",
-        "garlic clove",
-        "ground chuck",
-        "lemon juice",
-        "mayonnaise",
-        "olive oil",
-        "parsley",
-        "bell pepper",
-        "onion",
-        "salt",
-        "kaiser rolls",
-        "worcestershire sauce"
-      ]
-    },
-    {
-      "id": 644861,
-      "name": "Gluten Free Yellow Cake And Cupcakes",
-      "image_url": "https://img.spoonacular.com/recipes/644861-556x370.jpg",
-      "ingredients": [
-        "coconut flour",
-        "tapioca flour",
-        "salt",
-        "baking soda",
-        "baking powder",
-        "xanthan gum",
-        "eggs",
-        "sugar",
-        "veganaise",
-        "milk alternative",
-        "vanilla extract",
-        "earth balance butter",
-        "dairy free chocolate chips",
-        "salt",
-        "powdered sugar"
-      ]
-    }
-  ]
-};
+// const meals = {
+//   "recipes_list": [
+//     {
+//       "id": 637675,
+//       "name": "Cheesy Potato Corn Scones",
+//       "image_url": "https://img.spoonacular.com/recipes/637675-556x370.jpg",
+//       "ingredients": [
+//         "water",
+//         "potato flakes",
+//         "butter",
+//         "flour",
+//         "cornmeal",
+//         "cheddar cheese",
+//         "baking powder",
+//         "salt",
+//         "poppy seeds",
+//         "milk"
+//       ]
+//     },
+//     {
+//       "id": 646185,
+//       "name": "Ham and Red Bean Soup",
+//       "image_url": "https://img.spoonacular.com/recipes/646185-556x370.jpg",
+//       "ingredients": [
+//         "leeks",
+//         "thyme",
+//         "bay leaf",
+//         "coriander seeds",
+//         "peppercorns",
+//         "cumin seeds",
+//         "olive oil",
+//         "carrots",
+//         "celery",
+//         "garlic",
+//         "tomato paste",
+//         "beans",
+//         "bone from ham 3 cups ham 1 teaspoon ground chipotle chile powder salt and pepper",
+//         "water",
+//         "ham",
+//         "ground chipotle chile powder",
+//         "salt and pepper",
+//         "add he ham and chipotle chile powder and stir in. allow to simmer until beans are and are just begin"
+//       ]
+//     },
+//     {
+//       "id": 638832,
+//       "name": "Chocolate Banoffee Pie",
+//       "image_url": "https://img.spoonacular.com/recipes/638832-556x370.jpg",
+//       "ingredients": [
+//         "bananas",
+//         "butter",
+//         "chocolate digestives/plain chocolate cookies",
+//         "crackers",
+//         "thickened cream",
+//         "brown sugar",
+//         "chocolate",
+//         "icing mixture/sugar",
+//         "condensed milk",
+//         "vanilla essence"
+//       ]
+//     },
+//     {
+//       "id": 645680,
+//       "name": "Grilled Chuck Burgers with Extra Sharp Cheddar and Lemon Garlic Aioli",
+//       "image_url": "https://img.spoonacular.com/recipes/645680-556x370.jpg",
+//       "ingredients": [
+//         "arugula",
+//         "cheddar cheese",
+//         "garlic clove",
+//         "ground chuck",
+//         "lemon juice",
+//         "mayonnaise",
+//         "olive oil",
+//         "parsley",
+//         "bell pepper",
+//         "onion",
+//         "salt",
+//         "kaiser rolls",
+//         "worcestershire sauce"
+//       ]
+//     },
+//     {
+//       "id": 644861,
+//       "name": "Gluten Free Yellow Cake And Cupcakes",
+//       "image_url": "https://img.spoonacular.com/recipes/644861-556x370.jpg",
+//       "ingredients": [
+//         "coconut flour",
+//         "tapioca flour",
+//         "salt",
+//         "baking soda",
+//         "baking powder",
+//         "xanthan gum",
+//         "eggs",
+//         "sugar",
+//         "veganaise",
+//         "milk alternative",
+//         "vanilla extract",
+//         "earth balance butter",
+//         "dairy free chocolate chips",
+//         "salt",
+//         "powdered sugar"
+//       ]
+//     }
+//   ]
+// };
