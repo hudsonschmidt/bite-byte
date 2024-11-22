@@ -8,13 +8,16 @@ function MRForm() {
   const [imageUrl, setImageUrl] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [message, setMessage] = useState('');
+  
+  const host = 'https://biteandbyte-cfd6d9azd2a4brce.westus-01.azurewebsites.net'
+  // const host = 'https://localhost:8000'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const ingredientList = ingredients.split(',').map((ingredient) => ingredient.trim());
 
     try {
-      const response = await axios.post('http://localhost:8000/meals', {
+      const response = await axios.post('host/meals', {
         name,
         image_url: imageUrl,
         ingredients: ingredientList,
