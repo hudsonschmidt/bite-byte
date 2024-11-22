@@ -4,10 +4,12 @@ import "./browse.css"
 
 const Browse = () => {
   const [meals, setMeals] = useState([]);
+  const host = 'https://biteandbyte-cfd6d9azd2a4brce.westus-01.azurewebsites.net'
+  // const host = 'https://localhost:8000'
 
   const fetchMeals = async () => {
     try {
-      const response = await fetch('http://localhost:8000/meals');
+      const response = await fetch('host/meals');
       if (response.ok) {
         const data = await response.json();
         setMeals(data.recipes_list); 
