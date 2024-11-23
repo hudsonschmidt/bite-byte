@@ -12,24 +12,28 @@ function MRForm() {
   const host = 'https://biteandbyte-cfd6d9azd2a4brce.westus-01.azurewebsites.net'
   // const host = 'https://localhost:8000'
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const ingredientList = ingredients.split(',').map((ingredient) => ingredient.trim());
-
+  const handleSubmit = async (meal) => {
     try {
-      const response = await axios.post('host/meals', {
-        name,
-        image_url: imageUrl,
-        ingredients: ingredientList,
-      }, {
+      const response = await fetch('host/meals', {
+        method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming token is stored in local storage
-        }
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzNhOTU1YjQ5MTMyM2ZlNDE1NzRjMmYiLCJpYXQiOjE3MzE4OTI1NzEsImV4cCI6MTczMTk3ODk3MX0.2YJVf-gIpbpqB3VNLvP_qGu-5k4mF7eKnAWeP-FnG3E',
+        },
+        body: JSON.stringify(meal),
       });
 
-      setMessage('Recipe added successfully!');
+      if (response.ok) {
+        const newMeal = await response.json();
+        setMeals((prevMeals) => [newMeal, ...prevMeals]);
+        setFilteredMeals((prevFiltered) => [...prevFiltered, newMeal]);
+        setMessage('Recipe added successfully!');
+      } else {
+        console.error('Failed to add meal:', response.statusText);
+        setMessage('Failed to add recipe. Please try again. Make sure you are logged in.');
+      }
     } catch (error) {
-      console.error('Failed to add recipe', error);
+      console.error('Failed to add meal:', error);
       setMessage('Failed to add recipe. Please try again. Make sure you are logged in.');
     }
   };
