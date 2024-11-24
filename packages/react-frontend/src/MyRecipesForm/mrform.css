@@ -1,0 +1,68 @@
+#formbody {
+    margin-top: 60px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.mr-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.form-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+p {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#formimg {
+    height: '100vh';
+    background-image: url('../images/mrform.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

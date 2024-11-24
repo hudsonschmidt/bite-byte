@@ -4,10 +4,13 @@
   "description": "CSC-307 team project: food/recipe web app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "lint": "npx eslint . && npx prettier --check .",
+    "test": "echo \"Error: no test specified\"",
+    "dev": "nodemon backend.js",
+    "start": "node backend.js"
   },
-  "author": "",
+  "author": "'",
   "license": "ISC",
   "workspaces": [
     "packages/*"
@@ -20,6 +23,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
+    "jest": "^29.7.0",
     "react-router-dom": "^6.28.0"
   }
 }

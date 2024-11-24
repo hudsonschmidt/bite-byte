@@ -22,14 +22,6 @@
     height: 500p
 }
 
-#saved {
-    background-image: url('../images/saved.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 500p
-}
-
 #myrecipes {
     background-image: url('../images/myrecipes.jpeg');
     background-size: cover;
