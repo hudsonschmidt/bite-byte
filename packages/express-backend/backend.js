@@ -6,18 +6,6 @@ import mongoose from "mongoose";
 import cors from "cors";
 import recipeService from "./services/recipe_service.js";
 import { registerUser, loginUser, authenticateUser } from "./auth.js";
-import jwt from 'jsonwebtoken';
-
-const secret = 'my_actual_secret_key'; // Replace with the backend's TOKEN_SECRET
-const userId = '673a955b491323fe41574c2f'; // Replace with the correct user ID
-
-const token = jwt.sign(
-  { userId: userId },
-  secret,
-  { expiresIn: '1d' } // Token valid for 1 day
-);
-
-console.log('Generated Token:', token);
 
 const app = express();
 const port = 8000;
@@ -29,25 +17,8 @@ const { MONGO_CONNECTION_STRING } = process.env;
 mongoose.set("debug", true);
 mongoose.connect(MONGO_CONNECTION_STRING).catch((error) => console.log(error));
 
-<<<<<<< HEAD
-
-=======
-const { API_KEY } = process.env;
-const API = 'https://api.spoonacular.com/recipes/random';
->>>>>>> main
 app.use(cors());
 app.use(express.json());
-
-function mapRecipeToSchema(recipe) {
-  return {
-    id: recipe.id,
-    name: recipe.title,
-    image_url: recipe.image,
-    // summary: recipe.summary,
-    ingredients: recipe.extendedIngredients ? recipe.extendedIngredients.map(ing => ing.name):[],
-    // instructions: recipe.instructions || "No instructions available"
-  };
-}
 
 
 app.get("/", (req, res) => {
