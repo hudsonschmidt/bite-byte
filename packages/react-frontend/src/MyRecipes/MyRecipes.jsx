@@ -5,7 +5,7 @@ import "./MyRecipes.css"
 
 const MyRecipes = () => {
   const [meals, setMeals] = useState([]);
-  const host = 'https://biteandbyte-cfd6d9azd2a4brce.westus-01.azurewebsites.net'
+  const host = 'https://bite-byte.azurewebsites.net/'
   //const host = 'http://localhost:8000'
   const token = localStorage.getItem('authToken');
 
