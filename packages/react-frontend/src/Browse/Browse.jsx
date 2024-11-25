@@ -4,8 +4,6 @@ import "./browse.css";
 
 const Browse = () => {
     const [meals, setMeals] = useState([]);
-    const [offset, setOffset] = useState(0);
-    const limit = 20;
     const host = 'http://localhost:8000';
     //const host = 'https://biteandbyte-cfd6d9azd2a4brce.westus-01.azurewebsites.net'
 
@@ -15,7 +13,6 @@ const Browse = () => {
             if (response.ok) {
                 const data = await response.json();
                 setMeals((prevMeals) => [...prevMeals, ...data.recipes_list]);
-                setOffset((prevOffset) => prevOffset + limit);
             } else {
                 console.error('Failed to fetch meals:', response.statusText);
             }
