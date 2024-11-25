@@ -10,6 +10,9 @@
 .card-title{
     text-align: center;
 }
+.btn-sm {
+    margin-top: 10px;
+  }
 
   /* Mobile responsiveness */
 @media (max-width: 768px) {

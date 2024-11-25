@@ -10,6 +10,8 @@ function Register() {
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const host = 'https://biteandbyte-cfd6d9azd2a4brce.westus-01.azurewebsites.net'
+  //const host = 'http://localhost:8000'
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,30 +21,54 @@ function Register() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const { username: name, password, confirmPassword } = formData;
-
+  
     if (!name || !password || !confirmPassword) {
       setErrorMessage('All fields are required.');
       setSuccessMessage('');
       return;
     }
-
+  
     if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match.');
       setSuccessMessage('');
       return;
     }
+  
+    try {
+      const response = await fetch(`${host}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: name, pwd: password }),
+      });
+  
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message);
+      }
+  
+      const { token } = await response.json();
+      localStorage.setItem('authToken', token);
+      setSuccessMessage('Registration successful!');
+      setErrorMessage('');
+      setFormData({
+        username: '',
+        password: '',
+        confirmPassword: '',
+      });
 
-    setErrorMessage('');
-    setSuccessMessage('Registration successful!');
-    setFormData({
-      username: '',
-      password: '',
-      confirmPassword: '',
-    });
+      setTimeout(() => {
+        window.location.href = '/myrecipes';
+      }, 2000);
+    } catch (error) {
+      setErrorMessage(error.message || 'Registration failed.');
+      setSuccessMessage('');
+    }
   };
 
   return (

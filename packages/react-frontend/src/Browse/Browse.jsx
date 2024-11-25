@@ -5,8 +5,9 @@ import "./browse.css"
 
 const Browse = () => {
   const [meals, setMeals] = useState([]);
-  //const host = 'https://biteandbyte-cfd6d9azd2a4brce.westus-01.azurewebsites.net'
-  const host = 'http://localhost:8000'
+  const host = 'https://biteandbyte-cfd6d9azd2a4brce.westus-01.azurewebsites.net'
+  //const host = 'http://localhost:8000'
+  const token = localStorage.getItem('authToken');
 
   const fetchMeals = async () => {
     try {
@@ -28,7 +29,7 @@ const Browse = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzM1MjNmMTVmMGMwYzk0MDk4MTdiOWIiLCJpYXQiOjE3MzI1MDk3NTMsImV4cCI6MTczMjU5NjE1M30.xSrjqvn2E2XL9lZnXIUbFoKmQFmodvw_o3eICO9o4h8',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(meal),
       });
