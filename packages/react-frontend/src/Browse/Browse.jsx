@@ -11,7 +11,7 @@ const Browse = () => {
 
     const fetchMeals = async () => {
         try {
-            const response = await fetch(`${host}/meals?limit=${limit}&offset=${offset}`);
+            const response = await fetch(`${host}/meals`);
             if (response.ok) {
                 const data = await response.json();
                 setMeals((prevMeals) => [...prevMeals, ...data.recipes_list]);
