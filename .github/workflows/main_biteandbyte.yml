@@ -26,10 +26,11 @@ jobs:
           npm install --workspaces=false
           npm run build -w express-backend --if-present
           npm run build -w react-frontend --if-present
-
-      - name: Zip artifact for deployment
-        run: zip -r release.zip build/
         working-directory: packages/react-frontend
+        
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
+        working-directory: packages/express-backend
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4

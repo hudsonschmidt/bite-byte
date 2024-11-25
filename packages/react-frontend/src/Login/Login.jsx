@@ -2,50 +2,46 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./login.css"
 
-function Login() {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+function Login(){
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const host = 'https://bite-byte.azurewebsites.net/'
+  //const host = 'http://localhost:8000'
+  
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError('');
 
-    const { username: name, password } = formData;
+    try {
+      const response = await fetch(`${host}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, pwd: password }),
+      });
 
-    if (!name || !password) {
-      setErrorMessage('All fields are required.');
-      setSuccessMessage('');
-      return;
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message);
+      }
+
+      const { token } = await response.json();
+      localStorage.setItem('authToken', token);
+      alert('Login successful!');
+    } catch (error) {
+      setError(error.message || 'Login failed');
     }
-
-
-    setErrorMessage('');
-    setSuccessMessage('Logging in');
-    setFormData({
-      username: '',
-      password: '',
-    });
   };
 
   return (
     <div className="container container-fluid" id="registerbody">
       <h1 className="text-center mb-4" id='login_h1'>Login</h1>
 
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-      {successMessage && <div className="alert alert-success">{successMessage}</div>}
 
-      <form onSubmit={handleSubmit} className="mx-auto" style={{ maxWidth: '600px' }}>
+      <form onSubmit={handleLogin} className="mx-auto" style={{ maxWidth: '600px' }}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Username
@@ -55,8 +51,8 @@ function Login() {
             id="username"
             name="username"
             className="form-control"
-            value={formData.username}
-            onChange={handleInputChange}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter your Username"
           />
         </div>
@@ -70,8 +66,8 @@ function Login() {
             id="password"
             name="password"
             className="form-control"
-            value={formData.password}
-            onChange={handleInputChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
           />
         </div>

@@ -4,12 +4,19 @@ import recipeModel from "../models/recipe.js";
 
 
 function getRecipes(name, limit, offset) {
-  if (name) 
-  {
-    return recipeModel.find({ name: new RegExp(name, "i")}); 
+  if (name) {
+      return recipeModel
+          .find({ name: new RegExp(name, "i") })
+          .sort({ createdAt: -1 }) 
+          .limit(limit);
   }
-  return recipeModel.find().skip(offset).limit(); 
+  return recipeModel
+      .find()
+      .sort({ createdAt: -1 }) 
+      .skip(offset)
+      .limit(limit);
 }
+
 
 function findRecipeById(id) {
   return recipeModel.findById(id);

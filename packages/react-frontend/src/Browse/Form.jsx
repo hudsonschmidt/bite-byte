@@ -7,7 +7,6 @@ const Form = ({ handleSubmit }) => {
     ingredients: ""
   });
 
-  // Update meal state based on input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
     setMeal((prevMeal) => ({
@@ -61,6 +60,18 @@ const Form = ({ handleSubmit }) => {
           value={meal.ingredients}
           onChange={handleChange}
           placeholder="Comma-separated list"
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="mealInstructions" className="form-label">Instructions</label>
+        <input
+          type="text"
+          id="mealInstructions"
+          name="instructions"
+          className="form-control"
+          value={meal.instructions}
+          onChange={handleChange}
           required
         />
       </div>

@@ -4,33 +4,55 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./MyRecipes.css"
 
 const MyRecipes = () => {
-  const [meals, setMeals] = useState([
-    // Example data
-    { id: 1, name: 'Recipe 1', image: 'https://via.placeholder.com/150' },
-    { id: 2, name: 'Recipe 2', image: 'https://via.placeholder.com/150' },
-    { id: 3, name: 'Recipe 3', image: 'https://via.placeholder.com/150' },
-    { id: 4, name: 'Recipe 4', image: 'https://via.placeholder.com/150' },
-  ]);
+  const [meals, setMeals] = useState([]);
+  const host = 'https://bite-byte.azurewebsites.net/'
+  //const host = 'http://localhost:8000'
+  const token = localStorage.getItem('authToken');
 
-  const [filteredMeals, setFilteredMeals] = useState([]);
-  const [mealIndex, setMealIndex] = useState(0);
-
-  const host = 'https://biteandbyte-cfd6d9azd2a4brce.westus-01.azurewebsites.net'
-  // const host = 'https://localhost:8000'
-
-  const loadMeals = () => {
-    const newRecipes = meals.slice(mealIndex, mealIndex + 6);
-    setFilteredMeals(prev => [...prev, ...newRecipes]);
-    setMealIndex(prev => prev + 6);
+  const fetchMeals = async () => {
+    try {
+      const response = await fetch(`${host}/posts`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setMeals(data.user_meals);
+      } else {
+        console.error('Failed to fetch meals:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Failed to fetch meals:', error);
+    }
   };
 
+  const deleteMeal = async (mealId) => {
+    try {
+      const response = await fetch(`${host}/meals/${mealId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization':`Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        setMeals((prevMeals) => prevMeals.filter((meal) => meal._id !== mealId)); 
+      } else {
+        console.error('Failed to delete meal:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Failed to delete meal:', error);
+    }
+  };
+  
   const addMeal = async (meal) => {
     try {
-      const response = await fetch('host/meals', {
+      const response = await fetch(`${host}/meals`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzNhOTU1YjQ5MTMyM2ZlNDE1NzRjMmYiLCJpYXQiOjE3MzE4OTI1NzEsImV4cCI6MTczMTk3ODk3MX0.2YJVf-gIpbpqB3VNLvP_qGu-5k4mF7eKnAWeP-FnG3E',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(meal),
       });
@@ -38,7 +60,6 @@ const MyRecipes = () => {
       if (response.ok) {
         const newMeal = await response.json();
         setMeals((prevMeals) => [newMeal, ...prevMeals]);
-        setFilteredMeals((prevFiltered) => [...prevFiltered, newMeal]);
       } else {
         console.error('Failed to add meal:', response.statusText);
       }
@@ -46,42 +67,33 @@ const MyRecipes = () => {
       console.error('Failed to add meal:', error);
     }
   };
-  const deleteMeal = (id) => {
-    setMeals((prevData) => prevData.filter((recipe) => recipe.id !== id));
-    setFilteredMeals((prevFiltered) => prevFiltered.filter((recipe) => recipe.id !== id));
-  };
 
   useEffect(() => {
-    loadMeals();
-    // eslint-disable-next-line
+    fetchMeals();
   }, []);
 
   const handleScroll = (e) => {
     const bottom = Math.ceil(e.target.scrollTop + e.target.clientHeight) >= e.target.scrollHeight;
-    if (bottom) loadMeals();
+    if (bottom) fetchMeals();
   };
 
   return (
-    <div id="mrbody" className="container-fluid">
+    <div id="browsebody" className="container-fluid">
       <div className="row">
-        {/* Sidebar */}
         <div className="col-md-3 bg-light p-4">
           <h2>Add a Reciepe</h2>
           <Form handleSubmit={addMeal} />
         </div>
-        {/* Recipe Cards */}
+
         <div id="recipe-container" className="col-md-9" style={{ overflowY: 'auto', height: 'calc(100vh - 56px)', padding: '20px' }} onScroll={handleScroll}>
           <div id="recipe-cards" className="row">
-            {filteredMeals.map(recipe => (
-              <div key={recipe.id} className="col-md-4 mb-4">
+            {meals.map(meal => (
+              <div key={meal.id} className="col-md-4 mb-4">
                 <div className="card">
-                  <img src={recipe.image} className="card-img-top" alt={recipe.name} />
+                  <img src={meal.image_url} className="card-img-top" alt={meal.name} />
                   <div className="card-body">
-                    <h5 className="card-title">{recipe.name}</h5>
-                    {/*} delete button */}
-                    <button onClick={() => deleteMeal(recipe.id)} className="delete-button">
-                      Delete
-                    </button>
+                    <h5 className="card-title">{meal.name}</h5>
+                    <button className="btn btn-danger btn-sm" onClick={() => deleteMeal(meal._id)}> Delete</button>
                   </div>
                 </div>
               </div>
@@ -90,7 +102,7 @@ const MyRecipes = () => {
         </div>
       </div>
     </div>
-    );
+  );
   };
 
 export default MyRecipes;
