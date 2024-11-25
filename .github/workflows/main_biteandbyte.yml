@@ -30,7 +30,7 @@ jobs:
         
       - name: Zip artifact for deployment
         run: zip -r release.zip build/
-        working-directory: packages/react-frontend
+        working-directory: packages/express-backend
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
