@@ -40,9 +40,9 @@ app.get('/meals', (req, res) => {
 
 
 app.post("/meals", authenticateUser, (req, res) => {
-  const { name, image_url, ingredients } = req.body;
+  const { name, image_url, ingredients, instructions } = req.body;
 
-  const newMeal = { name, image_url, ingredients, user: req.user._id };
+  const newMeal = { name, image_url, ingredients, instructions, user: req.user._id };
 
   recipeService.addRecipe(newMeal)
     .then(addedRecipe => res.status(201).json(addedRecipe))
@@ -78,7 +78,7 @@ app.get('/meals/:id', (req, res) => {
 });
 
 
-app.delete('/meals/:id', (req, res) => {
+app.delete('/meals/:id', authenticateUser, (req, res) => {
   const mealId = req.params.id;
 
   recipeService.findRecipeToDelete(mealId)

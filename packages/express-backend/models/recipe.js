@@ -30,29 +30,15 @@ const RecipeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    datePosted: {
-      type: Date,
-      default: Date.now,
-    },
-    ratings: [
-      {
-        user: { 
-          type: mongoose.Schema.Types.ObjectId, 
-          ref: "User", required: true 
-        },
-        rating: { 
-          type: Number, 
-          required: true, 
-          min: 1, 
-          max: 5 },
-      },
-    ],
     user: { 
       type: mongoose.Schema.Types.ObjectId, 
       ref: "User", required: true 
     },
   },
-  { collection: "recipes_list" } 
+  { 
+    collection: "recipes_list",
+    timestamps: true,
+  } 
 );
 
 
