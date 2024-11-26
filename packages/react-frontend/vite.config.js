@@ -11,14 +11,11 @@ export default defineConfig({
   build: {
     outDir: "build",
     rollupOptions: {
-      input: {
-        main: './src/App/main.jsx',  
-        index: './index.html'
-      },
       external: [
         'bootstrap/dist/css/bootstrap.min.css',
       ],
     },
+    base: './', // Use relative paths for assets
   },
 });
 
