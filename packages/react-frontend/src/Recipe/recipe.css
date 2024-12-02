@@ -4,3 +4,25 @@
     overflow-x: hidden;
 }
 
+.recipe-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.recipe-ingredients {
+    text-align: center;
+}
+
+.recipe-instructions {
+    text-align: center;
+}
+
+
+#recipe-img {
+    height: '100vh';
+    background-image: url('../images/mrform.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
